@@ -1,0 +1,9 @@
+print("start")
+"""
+# This is a simple hello world program in Python
+
+# Print the message "Hello, World!"
+print("Hello, World!")
+"""
+
+print("Hello world from test.py!")
