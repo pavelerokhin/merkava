@@ -9,8 +9,8 @@ from src.utils import WHITE, GREEN, GREY
 def routine(fp, log):
     log.info("Merkava started")
 
+    i = 0
     while True:
-        wait_new_file_size(fp, log)
         make_file_copy(fp, log)
         try:
             exec_commands_to_file(fp, log)
@@ -21,7 +21,11 @@ def routine(fp, log):
 
         # send os message that file changed now
         delete_file_copy(fp, log)
-        log.info(f"{GREEN}File {fp} ready {WHITE}")
+        if i > 0:
+            log.info(f"{GREEN}File {fp} ready {WHITE}")
+            wait_new_file_size(fp, log)
+        i += 1
+
     log.info(f"{GREY}Merkava finished{WHITE}")
 
 

@@ -14,7 +14,6 @@ def exec_commands(file_text, log):
             prompt_end = file_text.find("#end")
 
             if prompt_start == -1 or prompt_end == -1:
-                log.info(f"{GREY}finished parse and exec {i} commands{WHITE}")
                 break
             i += 1
             log.info(f"{GREY}parsing and executing command {i}{WHITE}")
