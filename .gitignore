@@ -1,7 +1,7 @@
 .idea
 .vscode
- __pycache__
+__pycache__/
 
 .DS_Store
 
-OPEN_API_KEY
+OPENAI_API_KEY
