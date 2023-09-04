@@ -1,0 +1,24 @@
+Merkava is a main battle tank used by the Israeli Defense Forces. It is known for its high level of protection, advanced technology, and unique design features. The Merkava has proven to be a formidable force on the battlefield, with its powerful armament and superior mobility. It has undergone several upgrades over the years to enhance its capabilities and maintain its effectiveness. The Merkava tank is a symbol of Israeli military strength and innovation.
+
+
+"""
+def f(x):
+    print(x)
+
+# Example usage:
+f(5)  # Output: 5
+f("Hello")  # Output: Hello
+"""
+
+"""
+import unittest
+
+class TestF(unittest.TestCase):
+    def test_f(self):
+        self.assertEqual(f(5), None)
+        self.assertEqual(f("Hello"), None)
+
+if __name__ == '__main__':
+    unittest.main()
+"""
+

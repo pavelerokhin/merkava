@@ -1,19 +1,19 @@
 import logging
+import sys
 
-from src.files import *
-from src.io import *
-from src.utils import *
+from src.files import wait_new_file_size, make_file_copy, delete_file_copy, recover_file, check_file
+from src.io import exec_commands_to_file
+from src.utils import WHITE, GREEN, GREY
 
 
 def routine(fp, log):
     log.info("Merkava started")
-    i = 0
 
     while True:
         wait_new_file_size(fp, log)
         make_file_copy(fp, log)
         try:
-            parse_and_exec_mrkv_commands(fp, log)
+            exec_commands_to_file(fp, log)
         except Exception as e:
             log.error(e)
             recover_file(fp, log)
@@ -21,10 +21,8 @@ def routine(fp, log):
 
         # send os message that file changed now
         delete_file_copy(fp, log)
-        log.info(f"{GREEN}File {fp} changed{WHITE}")
-        i += 1
-
-    log.info("Merkava finished")
+        log.info(f"{GREEN}File {fp} ready {WHITE}")
+    log.info(f"{GREY}Merkava finished{WHITE}")
 
 
 if __name__ == "__main__":
@@ -35,5 +33,5 @@ if __name__ == "__main__":
     check_file(sys.argv, log)
     file_path = sys.argv[1]
 
+    # TODO: do routine as a background process
     routine(file_path, log)
-
