@@ -1,33 +1,39 @@
-import sys
+import logging
 
-from src.files import check_file, wait_new_file_size
-from src.io import get_all_mrkv_commands, elaborate_mrkv_commands
-from src.messages import send_info_message
+from src.files import *
+from src.io import *
+from src.utils import *
 
 
-def routine(fp):
-    print("Merkava started")
+def routine(fp, log):
+    log.info("Merkava started")
     i = 0
+
     while True:
-        wait_new_file_size(fp)
-        cmds = get_all_mrkv_commands(fp)
+        wait_new_file_size(fp, log)
+        make_file_copy(fp, log)
         try:
-            elaborate_mrkv_commands(cmds, fp)
+            parse_and_exec_mrkv_commands(fp, log)
         except Exception as e:
-            print(e)
+            log.error(e)
+            recover_file(fp, log)
             break
 
         # send os message that file changed now
-        send_info_message("file {} changed".format(fp))
-        print(f"{i} - completion finished")
+        delete_file_copy(fp, log)
+        log.info(f"{GREEN}File {fp} changed{WHITE}")
         i += 1
 
-    print("Merkava finished")
+    log.info("Merkava finished")
 
 
 if __name__ == "__main__":
-    check_file(sys.argv)
+    # logger to stdout
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s mrkv: %(message)s',)
+    log = logging.getLogger()
+
+    check_file(sys.argv, log)
     file_path = sys.argv[1]
 
-    routine(file_path)
+    routine(file_path, log)
 
